@@ -200,3 +200,11 @@ http://localhost:5000/cars
 LICENSE
 ```
 .
+
+## Автор
+
+**YaroslavMS**
+
+[GitHub профіль](https://github.com/YaroslavMS)
+
+© 2025. Усі права захищені.
