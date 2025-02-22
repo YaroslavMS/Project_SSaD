@@ -1,8 +1,9 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './assets/styles/global.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import CookieConsent from 'react-cookie-consent';
 import Router from './components/ui/Router'
+import './assets/styles/global.css'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
 
@@ -13,6 +14,16 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
         <Router/>
+        <CookieConsent
+        location="bottom"
+        buttonText="Прийняти"
+        cookieName="userConsent"
+        style={{ background: "#2B373B", color: "#fff" }}
+        buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
+        expires={150}
+      >
+        Цей сайт використовує файли cookie для покращення взаємодії користувачів.
+      </CookieConsent>  
     </QueryClientProvider>
   </React.StrictMode>
 );
