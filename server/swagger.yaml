@@ -1,0 +1,57 @@
+openapi: 3.0.0
+info:
+  title: Cars Catalog API
+  version: 1.0.0
+  description: API для отримання списку автомобілів та додавання нового авто.
+
+servers:
+  - url: http://localhost:5000
+    description: Локальний сервер
+
+paths:
+  /cars:
+    get:
+      summary: Отримати список автомобілів
+      description: Повертає список усіх автомобілів у базі.
+      responses:
+        "200":
+          description: Успішний запит. Повертає масив автомобілів.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Car"
+
+    post:
+      summary: Додати новий автомобіль
+      description: Додає новий автомобіль у базу даних.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Car"
+      responses:
+        "201":
+          description: Автомобіль успішно створений
+        "400":
+          description: Некоректні вхідні дані
+
+components:
+  schemas:
+    Car:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "660d75f4b6a6f3e91c8b4567"
+        name:
+          type: string
+          example: "Tesla Model S"
+        price:
+          type: number
+          example: 79999
+        image:
+          type: string
+          example: "https://example.com/tesla.jpg"

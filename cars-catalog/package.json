@@ -19,6 +19,8 @@
     "react-router": "^6.26.0",
     "react-router-dom": "^6.26.0",
     "react-scripts": "5.0.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "vimeo": "^2.3.1",
     "web-vitals": "^2.1.4"
   },

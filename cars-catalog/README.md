@@ -186,6 +186,13 @@ http://localhost:5000/cars
 ```bash
 Створений об'єкт автомобіля
 ```
+## Документація API
+
+Документація API доступна через Swagger за адресою:
+
+```bash
+http://localhost:5000/api-docs
+```
 
 ## Cookie Policy
 
@@ -200,6 +207,14 @@ http://localhost:5000/cars
 LICENSE
 ```
 .
+
+## Storybook
+
+Виклик storybook:
+
+```bash
+npm run storybook
+```
 
 ## Автор
 

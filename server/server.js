@@ -1,6 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const swaggerUi = require('swagger-ui-express')
+const swaggerJsdoc = require('swagger-jsdoc')
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -40,6 +42,51 @@ const carSchema = new mongoose.Schema({
 
 const Car = mongoose.model('Car', carSchema)
 
+// Swagger конфігурація
+const swaggerOptions = {
+	definition: {
+		openapi: '3.0.0',
+		info: {
+			title: 'Car API',
+			version: '1.0.0',
+			description: 'API для роботи з автомобілями',
+		},
+	},
+	apis: ['./server.js'], // Шлях до цього файлу
+}
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+
+/**
+ * @swagger
+ * /cars:
+ *   get:
+ *     summary: Отримати всі автомобілі
+ *     description: Повертає список усіх автомобілів
+ *     responses:
+ *       200:
+ *         description: Масив автомобілів
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: number
+ *                     example: 1
+ *                   name:
+ *                     type: string
+ *                     example: "Toyota Corolla"
+ *                   image:
+ *                     type: string
+ *                     example: "https://example.com/image.jpg"
+ *                   price:
+ *                     type: number
+ *                     example: 20000
+ */
 app.get('/cars', async (req, res) => {
 	try {
 		const cars = await Car.find()
@@ -49,17 +96,42 @@ app.get('/cars', async (req, res) => {
 	}
 })
 
-app.post('/cars', async (req, res) => {
-	try {
-		const newCar = new Car(req.body)
-		console.log(newCar)
-		await newCar.save()
-		res.status(201).json('Car added successfully')
-	} catch (err) {
-		res.status(400).json('Error: ' + err)
-	}
-})
-
+/**
+ * @swagger
+ * /cars/{id}:
+ *   get:
+ *     summary: Отримати автомобіль за ID
+ *     description: Повертає інформацію про автомобіль
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID автомобіля
+ *         schema:
+ *           type: number
+ *     responses:
+ *       200:
+ *         description: Дані про автомобіль
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: number
+ *                   example: 1
+ *                 name:
+ *                   type: string
+ *                   example: "Toyota Corolla"
+ *                 image:
+ *                   type: string
+ *                   example: "https://example.com/image.jpg"
+ *                 price:
+ *                   type: number
+ *                   example: 20000
+ *       404:
+ *         description: Автомобіль не знайдено
+ */
 app.get('/cars/:id', async (req, res) => {
 	const id = +req.params.id
 
@@ -76,4 +148,5 @@ app.get('/cars/:id', async (req, res) => {
 
 app.listen(port, () => {
 	console.log(`Server is running on port: ${port}`)
+	console.log(`Swagger доступний на http://localhost:${port}/api-docs`)
 })

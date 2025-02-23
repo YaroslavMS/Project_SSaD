@@ -1,0 +1,67 @@
+openapi: 3.0.0
+info:
+  title: Car API
+  version: 1.0.0
+  description: Мінімальна документація API для роботи з автомобілями
+
+paths:
+  /cars:
+    get:
+      summary: Отримати всі автомобілі
+      description: Повертає список усіх доступних автомобілів.
+      responses:
+        '200':
+          description: Успішна відповідь. Масив автомобілів.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: "123"
+                    name:
+                      type: string
+                      example: "Toyota Corolla"
+                    price:
+                      type: number
+                      example: 20000
+                    image:
+                      type: string
+                      example: "https://example.com/image.jpg"
+
+  /cars/{id}:
+    get:
+      summary: Отримати автомобіль за ID
+      description: Повертає інформацію про конкретний автомобіль за його унікальним ідентифікатором.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID автомобіля
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успішна відповідь. Об'єкт автомобіля.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "123"
+                  name:
+                    type: string
+                    example: "Toyota Corolla"
+                  price:
+                    type: number
+                    example: 20000
+                  image:
+                    type: string
+                    example: "https://example.com/image.jpg"
+        '404':
+          description: Автомобіль не знайдено
