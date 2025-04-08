@@ -186,13 +186,45 @@ http://localhost:5000/cars
 ```bash
 Створений об'єкт автомобіля
 ```
-## Документація API
+## Згенерована документація
 
-Документація API доступна через Swagger за адресою:
+Документація для фронтенд-сервісів (car.service.js) генерується автоматично за допомогою JSDoc.
 
+**Генерація**
+
+Щоб згенерувати документацію JSDoc:
+
+1. Переконайтесь, що JSDoc встановлено глобально або в проєкті:
 ```bash
-http://localhost:5000/api-docs
+npm install jsdoc --save-dev
 ```
+
+2. Створіть або оновіть файл jsdoc.json:
+```bash
+{
+  "source": {
+    "include": ["src/services"],
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules|docs)"
+  },
+  "opts": {
+    "destination": "./docs",
+    "recurse": true
+  }
+}
+```
+
+3. Запустіть команду:
+```bash
+npx jsdoc -c jsdoc.json
+```
+
+4. Після цього документація буде доступна локально у каталозі:
+```bash
+./docs/car.service.js.html
+```
+
+**Відкрийте файл docs/car.service.js.html у браузері для перегляду згенерованої документації.**
 
 ## Cookie Policy
 
